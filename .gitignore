@@ -1,0 +1,21 @@
+@"
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.env
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# Логи
+*.log
+*.tmp
+
+# Файлы зависимостей
+poetry.lock
+"@ | Out-File -FilePath ".gitignore" -Encoding UTF8
