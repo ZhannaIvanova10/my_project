@@ -1,35 +1,10 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict
 
-
-def filter_by_state(
-    transactions: List[Dict[str, Any]], state: str = "EXECUTED"
-) -> List[Dict[str, Any]]:
+def sort_by_date(operations: List[Dict[str, str]], reverse: bool = True) -> List[Dict[str, str]]:
     """
-    Фильтрует список транзакций по статусу.
-
-    Args:
-        transactions: Список словарей с транзакциями
-        state: Статус транзакции для фильтрации (по умолчанию 'EXECUTED')
-
-    Returns:
-        Отфильтрованный список транзакций с указанным статусом
+    Сортирует операции по дате.
+    :param operations: Список операций (каждая операция — словарь с ключом 'date').
+    :param reverse: Если True — сортировка по убыванию (сначала новые).
+    :return: Отсортированный список операций.
     """
-    return [t for t in transactions if t.get("state") == state]
-
-
-def sort_by_date(
-    transactions: List[Dict[str, Any]], reverse: bool = True
-) -> List[Dict[str, Any]]:
-    """
-    Сортирует список транзакций по дате.
-
-    Args:
-        transactions: Список словарей с транзакциями
-        reverse: Порядок сортировки (по умолчанию True - по убыванию)
-
-    Returns:
-        Отсортированный список транзакций
-    """
-    return sorted(
-        transactions, key=lambda x: x.get("date", ""), reverse=reverse
-    )
+    return sorted(operations, key=lambda x: x['date'], reverse=reverse)
