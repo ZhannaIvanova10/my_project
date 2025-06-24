@@ -1,23 +1,40 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 *.so
 .Python
 .env
 .venv/
 venv/
+*.egg-info/
+*.egg
+dist/
+build/
 
 # IDE
 .idea/
 .vscode/
 
-# Логи
+# Тесты и покрытие
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Логи и временные файлы
 *.log
 *.tmp
-
-# Файлы зависимостей
-poetry.lock
-# Временные файлы
-.coverage
 *.save
 *_backup.*
+
+# Зависимости
+poetry.lock
+pip-wheel-metadata/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook (опционально)
+.ipynb_checkpoints/
