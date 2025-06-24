@@ -17,3 +17,7 @@ venv/
 
 # Файлы зависимостей
 poetry.lock
+# Временные файлы
+.coverage
+*.save
+*_backup.*
