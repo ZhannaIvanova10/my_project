@@ -1,4 +1,7 @@
 # tests/test_processing.py
-def test_example():
-    """Проверка, что тесты запускаются."""
-    assert 1 + 1 == 2
+from src.processing import some_function  # импортируйте реальные функции
+import pytest
+
+def test_processing_function():
+    # тестовая логика
+    assert True  # замените на реальные проверки
