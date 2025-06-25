@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from masks import mask_account_number, mask_card_number
+
 
 def mask_account_card(account_info: str) -> str:
     """
@@ -12,6 +14,7 @@ def mask_account_card(account_info: str) -> str:
     else:
         parts = account_info.rsplit(" ", 1)
         return f"{parts[0]} {mask_card_number(parts[1])}"
+
 
 def get_date(date_str: str) -> str:
     """
