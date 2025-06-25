@@ -1,32 +1,40 @@
-import requests
 import os
-from typing import Dict, Optional
+import requests
+from typing import Dict, Optional, Any
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.getenv('EXCHANGE_RATE_API_KEY')
+BASE_URL = "https://api.apilayer.com/exchangerates_data/latest"
 
 
-class CurrencyConverter:
-    BASE_URL = "https://api.apilayer.com/exchangerates_data/latest"
+def convert_to_rub(transaction: Dict[str, Any]) -> Optional[float]:
+    """Convert transaction amount to RUB.
 
-    @classmethod
-    def convert_to_rub(cls, transaction: Dict) -> Optional[float]:
-        try:
-            amount = float(transaction.get('amount', 0))
-            currency = transaction.get('currency', 'RUB').upper()
+    Args:
+        transaction: Dictionary with transaction data
 
-            if currency == 'RUB':
-                return amount
+    Returns:
+        Amount in RUB or None if error occurs
+    """
+    if not transaction.get('amount'):
+        return None
 
-            response = requests.get(
-                cls.BASE_URL,
-                params={'base': currency, 'symbols': 'RUB'},
-                headers={'apikey': os.getenv('EXCHANGE_RATE_API_KEY')},
-                timeout=10
-            )
-            response.raise_for_status()
-            return amount * response.json()['rates']['RUB']
+    try:
+        currency = transaction.get('currency', 'RUB').upper()
+        amount = float(transaction['amount'])
 
-        except Exception:
-            return None
+        if currency == 'RUB':
+            return amount
 
-
-def convert_currency_to_rub(transaction: Dict) -> Optional[float]:
-    return CurrencyConverter.convert_to_rub(transaction)
+        response = requests.get(
+            BASE_URL,
+            params={'base': currency, 'symbols': 'RUB'},
+            headers={'apikey': API_KEY},
+            timeout=5
+        )
+        response.raise_for_status()
+        return round(amount * response.json()['rates']['RUB'], 2)
+    except (requests.RequestException, KeyError, ValueError):
+        return None
